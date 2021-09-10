@@ -1,0 +1,335 @@
+<html>
+<head>
+<title>Borders 350 ITT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-polylinedecorator/0.7.3/leaflet.polylineDecorator.min.js" integrity="sha512-tRCFXlFRot9+b2goTTpt5u2CmnZfQKod2YK3akbKEQBZlM0q5776tsgSzt22vBfBgFqDhNl1wv4WShLH8oRzYw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.6.0/gpx.min.js"></script>
+<link href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator_simple.min.css" rel="stylesheet">
+<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
+<style>
+html {
+  scroll-behavior: smooth;
+}
+p {
+  margin-right: 15%;
+  margin-left: 15%;
+  text-align: justify;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+}
+q {
+  margin-right: 15%;
+  margin-left: 25%;
+  text-align: justify;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  color: #777777;
+}
+li {
+  margin-right: 15%;
+  margin-left: 15%;
+  text-align: justify;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+}
+h2 {
+  text-align: center;
+  font-family: 'Montserrat',Lucida Console,Monaco,Helvetica,Arial,sans-serif;
+  color: #777777;
+}
+h3 {
+  text-align: center;
+  font-family: 'Montserrat',Lucida Console,Monaco,Helvetica,Arial,sans-serif;
+  color: #777777;
+}
+footer {
+  margin-top: 10%;
+  margin-right: 25%;
+  margin-left: 25%;
+  font-family: Roboto,Helvetica,Arial,sans-serif;
+  text-align: center;
+  color: #777777;
+  font-size:50%;
+}
+bar{
+  text-align: center;
+  margin-right: 15%;
+  margin-left: 15%;
+  font-family: 'Montserrat',Lucida Console,Monaco,Helvetica,Arial,sans-serif;
+  z-index: 9999;
+}
+/* Style the navbar */
+#navbar {
+  overflow: hidden;
+  background-color: rgba(256, 256, 256, 1);
+}
+
+/* Navbar links */
+#navbar a {
+  display: block;
+  color: #777777;
+  display: inline-block;
+  text-align: center;
+  padding: 14px;
+  text-decoration: none;
+  font-size:100%;
+
+}
+
+/* Page content */
+.content {
+  padding: 16px;
+}
+
+/* The sticky class is added to the navbar with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the navigation bar gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 60px;
+}
+.container {
+  position: relative;
+  max-width: 98%; /* Maximum width */
+  margin: 0 auto; /* Center it */
+  z-index: -1;
+}
+
+.container .content {
+  position: absolute; /* Position the background text */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /*background: rgb(0, 0, 0);*/
+  background: rgba(0, 0, 0, 0.2);
+  color: #f1f1f1; /* Grey text */
+  text-align:center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2vw;
+}
+.tabulator-col-title {  
+	text-align: center; 
+	white-space: normal;
+}
+.leaflet-container { z-index:0;}
+.with-bg-size {
+  background-image: url('cover_ch.jpg');
+  width: 1908px;
+  height: 820px;
+  background-position: center;
+  /* Make the background image cover the area of the <div>, and clip the excess */
+  background-size: cover;
+  max-width: 98%;
+  z-index: -1;
+  margin: 0 auto;
+}
+</style>
+</head>
+<body>
+<bar>
+	<div id="navbar">
+	  <a href="#cover image">Home</a>
+	  <a href="#route">Route</a>
+	  <a href="#rules">Rules</a>
+	  <a href="#groupstart">Group Start</a>
+	  <a href="#finishers">Finishers</a>
+	</div>
+</bar>
+<div id="cover image" class="container">
+  <img src="cover_ch.jpg" width="100%;">
+  <!--<img src="https://live.staticflickr.com/4510/38145010061_7264ed178d_h.jpg" alt="Devil's Beef Tub" width="100%;">-->
+  <!--<img src="https://live.staticflickr.com/7567/26815054292_f40ceae6b4_b.jpg" alt="Dollar Law" width="100%;">-->
+  <!--<img src="https://live.staticflickr.com/3918/14549326616_87727011b6_h.jpg" alt="Devil's Beef Tub" width="100%;">-->
+  <!--<img src="https://lh3.googleusercontent.com/m03wEJDXEk-2huphdjUCYS_I1fYg5ZSk8ZZ13l3e7S2nne_Fv8QhNWkWFAouBSA-VFBKy6MV2wj4eyGkOhfPvHQVah0F-7DXIqLUqE0snlVyi9SsTxjtrFpJ42hMFz00QYGp-swWk6PeWXwzFyJhdnn4OLsW1HyQ8lGxn9fCXZVB7joZcwDSKKIVob35xFhWjqXt49A66PkLziH5YekZNnT4v9_wjbxrzMLJ2_lFqOExiRpJTBukB6iwYShDhkApKRt7FglVOG_BhNiCYo61XGUrrJMYU-J6eNEzcFli9wyzLAezrPOt_iXpAeqfgI060Tw9O_PAI9opJetfgZZ2E4su4GHej0lNJDR7HU1CctQ8Ng36OWvlcfJPhCwO5PcKq_YFXVfp5DHakOcoLyctHCIxoUN3XlZ4350gjq1r3SqWRiv61epJ57tDCB1Tup-uLvkAkbrWIgzuReZI_Te4Hp1F4803uHCMRQE06alRiQzP1ZW9BVPZ0-OkRTN0Jnw6EsL7E9ACrCIvobgP1i-Hq3cEB9QOjbTWuc_GXvSY41-5pAQuKmXJcRBR7fM0xM9MzqkYo6Yc-YpjkqNSqI5huvdOShsAAO6h4M9tx4ED9th-otdjL4p_qVuxo6vaCcUBabU95H8IKz0hTHu1AUJ4FK9h7MXMD3pg0B_xaPkO5rf8U4H10WVQ-MdjR6LuvNgnvwEJs8T5Ljzd08hw7u_zGEXPdg=w1680-h723-no?authuser=0" alt="Devil's Beef Tub" width="100%;">-->
+  <!--<div class="with-bg-size"></div>-->
+  <div class="content">
+    <h1>Borders 350</h1>
+    <p style="text-align:center">A Self-supported Bikepacking Route Through the Scottish Borders</p>
+  </div>
+  <!--<blockquote style="font-family: Roboto,Helvetica,Arial,sans-serif;text-align: right;color: #777777;font-size:80%;">"The Devil's Beef Tub" by Brian Kerr. &copy Brian Kerr Photography 2017</blockquote>-->
+</div>
+<div style="margin-top: -40px; position: absolute;" id="home"></div>
+<p>The Borders 350 is a long distance mountain bike in the Scottish Borders. The route, 350 miles in length with over 10,000m of climbing, takes in the large areas of the South Uplands, Ettrick Forest, Eskdalemuir Forest Kielder Forest and the Cheviot Hills. It was developed by Raymond Young in 2014, with the first Group Start taking place in July 2015. Conceived as an Independent Time Trial (ITT), the main aim is to complete the route as fast and safely possible while adhering to a set rules for self-supported mountain biking.</p>
+<p>It is an unofficial ITT that is not sanctioned in any way, with no organisation, and no support. All this website provides is inspiration, the route, the rules, a suggested start time, and a list of riders who have completed the route.</p>
+<blockquote style="margin-right: 20%;margin-left: 20%;font-family: Roboto,Helvetica,Arial,sans-serif;text-align: center;color: #777777;font-size:90%;font-style: italic;">
+    "It is a beast of a route which takes in a great blend of stunning views, fantastic riding and some full on type 2 hike-a-bike! It travels through some remote (for the UK) ground and does require a significant degree of commitment. Completing under four days would be a solid achievement."<br>Ian Fitz
+</blockquote>
+<blockquote style="margin-right: 20%;margin-left: 20%;font-family: Roboto,Helvetica,Arial,sans-serif;text-align: center;color: #777777;font-size:90%;font-style: italic;">
+            "...as hard as the HT550 mile-for-mile."<br>Alex Pilkington
+</blockquote>
+<div style="margin-top: -40px; position: absolute;" id="route"></div>
+<h2>ROUTE</h2>
+<p>The majority of the route is on good trails and quiet roads, but there are also significant sections comprising boggy and very technical riding. Riders should also expect some extended periods of hike-a-bike. The ride starts and finishes in Peebles and comprises two loops. The routes starts on the western loop, tackling it in an anticlockwise direction, with the eastern loop completed clockwise, before returning to Peebles.</p>
+<p>There is also a shorter version of the route, the Borders 220, which does not included the eastern loop, and avoids some sections of the western loop.</p>
+<p>The weather in Scotland can be unpredictable - you may experience Scotland's 'four seasons in a day'. Do not attempt this ride unprepared - no one will be there to help you! Approach the ride as though you are on a solo expedition, fully prepared for your own limitations and whatever nature has in store for you.</p>
+<div id="mapid" style="width: 70%; height: 50%;position: relative;max-width: 98%;margin: 0 auto;z-index:0;"></div>
+<script>
+
+var mymap = L.map('mapid',{
+	center: [56.003898, -4.735687],
+	zoom: 14
+	});
+L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+		maxZoom: 18,
+		attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+	}).addTo(mymap);
+	
+var gpx = "Borders350.gpx"; // URL to your GPX file or the GPX itself
+new L.GPX(gpx, {async: true}).on('loaded', function(e) {
+  mymap.fitBounds(e.target.getBounds());
+}).addTo(mymap);
+
+//var polyline220 = L.polyline(route220	, {color: 'red'}).addTo(mymap);
+//var polyline350 = L.polyline(route350	, {color: 'blue'}).addTo(mymap);
+//var arrow = L.polylineDecorator(polyline, {
+//        patterns: [
+//            {offset: 25, repeat: 50, symbol: L.Symbol.arrowHead({pixelSize: 15, pathOptions: {fillOpacity: 1, weight: 0}})}
+//        ]
+//    }).addTo(map);
+//mymap.fitBounds(polyline350.getBounds());
+</script>
+<p>GPX files for the <a href="Borders350.gpx" target="_blank" rel="noopener noreferrer">350</a> and <a href="Borders220.gpx" target="_blank" rel="noopener noreferrer">220</a> can be downloaded here.</p>
+<div style="margin-top: -40px; position: absolute;" id="rules"></div>
+<h2>RULES</h2>
+<p>The Borders 350 is a long distance self-supported mountain bike time-trail route through the Scottish Borders. There is no entry fee, no prize money, and definitely no support. It is a self-timed Independent Time Trial (ITT). All that is provided on this site is a GPS track file, a suggested start time and a list of finishers and their times.</p>
+<p>For a time to be enter on the list below, it must have been completed in the spirt of self-supported riding. For this certain conditions must followed:</p>
+<ol>
+<li>Complete the entire route, under your own power with no drafting;</li>
+<li>Be completely self-supported throughout the ride. This means no support crews, or gear sharing;</li>
+<li>Only use commercial services that are available to all riders - no private resupply, no private lodging;</li>
+<li>If you have to leave the route, you must re-join it at the exactly same spot;</li>
+<li>No caches of any kind;</li>
+<li>No pre-arranged support, which means before you begin your ride - e.g. booking a B&B, arranging to meet a vehicle; and,</li>
+<li>All forward travel must be self-powered;</li>
+<li>Follow the <a href="https://www.outdooraccess-scotland.scot/" target="_blank" rel="noopener noreferrer">Scotland Outdoor Access Code</a> at all times, particularly how it relates to <a href="https://www.dmbins.com/riders/do-the-ride-thing" target="_blank" rel="noopener noreferrer">mountain biking</a> and <a href="https://www.outdooraccess-scotland.scot/practical-guide-all/camping" target="_blank" rel="noopener noreferrer">wild camping</a>.</li>
+</ol>
+<p>To be included in the list below, please send evidence of your ride (gpx file, link to public Strava/Komoot activity etc) to <a href="mailto:borders350itt@gmail.com">borders350itt@gmail.com</a>.</p>
+<script>
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+<div style="margin-top: -40px; position: absolute;" id="groupstart"></div>
+<h2>GROUP START</h2>
+<p>A group start is normally planned for the English August Bank Holiday Weekend. In 2021 this will be on 28th August, departing Peebles at 8am.</p>
+<p>If you are interested in beginning your ride at the suggested start time, please submit your intent to ride to <a href="mailto:borders350itt@gmail.com?subject=Intention to Ride">borders350itt@gmail.com</a>. You can also join the <a href="https://en-gb.facebook.com/groups/517013845127454/">Facebook group</a>. You should want to complete the route because of the self-supported philosophy, understand the rules are for of equal opportunity, and not be looking for grey areas within them. It is suggested that numbers are limited to 50 for the group start.</p>
+<p>Understand you must plan to be completely on your own, just as you would be if you chose to ride the route on any other day. The route passes through some very remote areas, and the upland UK weather can be extreme. You are responsible for your own safety and should be prepared for a nights in the hills. Tell someone what you are doing and check in with them when you are done.</p>
+<div style="margin-top: -40px; position: absolute;" id="finishers"></div>
+<h2>FINISHERS</h2>
+<h3>350</h3>
+	<div id="table_350" style="width: 70%; position: relative;max-width: 98%;margin: 0 auto;font-family: Roboto,Helvetica,Arial,sans-serif;"></div>
+<h3>220</h3>
+	<div id="table_220" style="width: 70%; position: relative;max-width: 98%;margin: 0 auto;font-family: Roboto,Helvetica,Arial,sans-serif;"></div>
+<script>
+function customSorter(a, b){
+	const aArray = a.split(':');
+	const bArray = b.split(':');
+	let diff = 0;
+	for (let i = 0; i < 3; i++){
+		if (aArray[i] !== bArray[i]){
+			diff = bArray[i] - aArray[i];
+			break;
+		}
+	}
+	return diff;
+}
+
+//custom date formatter
+var dateFormatter = function(cell, formatterParams){
+    var value = cell.getValue();
+
+    if(value){
+        value = parseInt(moment(value , "DD/MM/YYYY").format("YYYY"),10);
+    }
+
+    return value;
+}
+
+	//finish times
+var data350 = [
+	{year:'2020', date:'29/8/2020', name:'Saul Ayton', time:'02:20:26', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2020', date:'29/8/2020', name:'Dawn Anderson', time:'04:15:57', group:'Y', gender:'F', writeupurl:"", writeupicon:""},
+	{year:'2020', date:'19/7/2020', name:'Alex Pilkington', time:'02:08:29', group:'N', gender:'M', writeupurl:"https://fatsterbike.com/2020/07/26/the-borders-350-the-forgotten-mountains/", writeupicon:"\u27A5"},
+	{year:'2019', date:'6/7/2019', name:'Oliver Turnbull', time:'03:00:10', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2018', date:'7/7/2018', name:'Rob Andrews', time:'03:13:45', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2018', date:'7/7/2018', name:'Pete Gretton', time:'03:13:45', group:'Y', gender:'M', writeupurl:"https://docs.google.com/document/d/13pYYhByWWdMui3QtaudDJhUDia7v4kXiMuFrlOKxBmo/", writeupicon:"\u27A5"},
+	{year:'2019', date:'6/7/2019', name:'Brian Nichol', time:'03:10:00', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2019', date:'6/7/2019', name:'David Knowles', time:'03:12:57', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2019', date:'6/7/2019', name:'Saul Ayton', time:'03:20:16', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2016', date:'2/5/2016', name:'Raymond Young', time:'05:06:52', group:'N', gender:'M', writeupurl:"https://bearbonesbikepacking.co.uk/phpBB3/viewtopic.php?f=10&t=7643", writeupicon:"\u27A5"},
+	{year:'2018', date:'7/7/2018', name:'Freddy Tanner', time:'03:13:45', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2018', date:'7/7/2018', name:'Howard Perkins', time:'04:08:35', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2018', date:'7/7/2018', name:'Adrian Baskerville', time:'04:12:15', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2021', date:'10/7/2021', name:'Tom Gibbs', time:'02:01:20', group:'N', gender:'M', writeupurl:"https://bearbonesbikepacking.co.uk/phpBB3/viewtopic.php?p=268367#p268367", writeupicon:"\u27A5"},
+	{year:'2021', date:'28/8/2021', name:'Andrew Broadway', time:'03:09:15', group:'Y', gender:'M', writeupurl:"https://github.com/stravaig/Posts/blob/main/Borders350.md", writeupicon:"\u27A5"},
+	{year:'2021', date:'28/8/2021', name:'Donald McIntosh', time:'03:10:07', group:'Y', gender:'M', writeupurl:"https://www.donaldmcintosh.net/bike/borders3502021", writeupicon:"\u27A5"},
+];
+var data220 = [
+	{year:'2018', date:'7/7/2018', name:'Thomas Phillips', time:'02:12:45', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2018', date:'7/7/2018', name:'Raymond Young', time:'02:14:45', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+	{year:'2021', date:'28/8/2021', name:'Pete Gretton', time:'02:14:37', group:'Y', gender:'M', writeupurl:"", writeupicon:""},
+];
+
+	//build tables
+	var table350 = new Tabulator("#table_350", {
+		data:data350,
+		layout:"fitColumns",
+		columns: [
+			{title:"Year", field: "year", align: "center", widthGrow:0.75, headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"desc", multiselect:true}},
+			{title:"Start Date", field: "date", align: "center", sorter:"date", sorterParams:{format:"DD/MM/YYYY"}, widthGrow:0.75},
+			{title:"Name", field: "name", align: "center", widthGrow:2},
+			{title:"Time (day:hr:min)", field: "time", align: "center", sorter: customSorter, widthGrow:2},
+			{title:"Group Start", field: "group", align: "center", headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"asc", multiselect:true}, widthGrow:1},
+			{title:"Gender", field: "gender", align: "center", headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"asc", multiselect:true}, widthGrow:1},
+			{title:"Write Up", field:"writeupurl", formatter:"link", formatterParams:{
+    labelField:"writeupicon",
+    urlField:"writeupurl", target:"_blank",}, widthGrow:0.75, align: "center"}
+			],
+		initialSort:[
+			{column:"time", dir:"desc"},
+			{column:"date", dir:"desc"},
+		]
+	});
+	
+		var table220 = new Tabulator("#table_220", {
+		data:data220,
+		layout:"fitColumns",
+		columns: [
+			{title:"Year", field: "year", align: "center", widthGrow:0.75, headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"desc", multiselect:true}},
+			{title:"Start Date", field: "date", align: "center", sorter:"date", sorterParams:{format:"DD/MM/YYYY"}, widthGrow:0.75},
+			{title:"Name", field: "name", align: "center", widthGrow:2},
+			{title:"Time (day:hr:min)", field: "time", align: "center", sorter: customSorter, widthGrow:2},
+			{title:"Group Start", field: "group", align: "center", headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"asc", multiselect:true}, widthGrow:1},
+			{title:"Gender", field: "gender", align: "center", headerFilter: 'select', headerFilterFunc:"in", headerFilterParams: {values:true, sortValuesList:"asc", multiselect:true}, widthGrow:1},
+			{title:"Write Up", field:"writeupurl", formatter:"link", formatterParams:{
+    labelField:"writeupicon",
+    urlField:"writeupurl", target:"_blank",}, widthGrow:0.75, align: "center"}
+			],
+		initialSort:[
+			{column:"time", dir:"desc"},
+			{column:"date", dir:"desc"},
+		]
+	});
+</script>
+</body>
+</html>
+<footer>
+	<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons Licence" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />Except where otherwise noted, content on this site is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>
+</footer>
